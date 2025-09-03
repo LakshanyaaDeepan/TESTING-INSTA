@@ -19,11 +19,11 @@ wait = WebDriverWait(driver, 15)
 try:
     driver.get("https://www.instagram.com/accounts/login/")
     
-    # Login
+    
     wait.until(EC.presence_of_element_located((By.NAME, "username"))).send_keys(USERNAME)
     driver.find_element(By.NAME, "password").send_keys(PASSWORD + Keys.RETURN)
 
-    # Handle pop-ups
+    
     try:
         not_now = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Not now')]")))
         not_now.click()
@@ -35,11 +35,11 @@ try:
     except:
         pass
 
-    # Open profile directly instead of search (more reliable)
+    
     driver.get(f"https://www.instagram.com/{ACCOUNT_TO_FOLLOW}/")
     time.sleep(3)
 
-    # Find and click the Follow button
+    
     try:
         follow_btn = wait.until(EC.element_to_be_clickable((
             By.XPATH, "//button[normalize-space()='Follow' or normalize-space()='Follow Back']"
@@ -48,7 +48,7 @@ try:
         print(f"✅ Follow request sent to {ACCOUNT_TO_FOLLOW}")
     except:
         try:
-            # If already requested or following, button text is different
+    
             requested_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'Requested') or contains(text(),'Following')]")
             print(f"⚠️ Already following or request already sent to {ACCOUNT_TO_FOLLOW}")
         except:
@@ -58,3 +58,4 @@ try:
 
 finally:
     driver.quit()
+
